@@ -1833,9 +1833,42 @@ body.light-theme .contact-btn-upgraded:hover {
   .minimal-social-bar {
     display: none;
   }
+  .mobile-bottom-nav {
+    display: flex;
+    position: fixed;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    width: 100vw;
+    height: 60px;
+    background: rgba(24, 26, 32, 0.98);
+    box-shadow: 0 -2px 16px 0 rgba(0,0,0,0.18);
+    z-index: 1200;
+    justify-content: space-around;
+    align-items: center;
+    padding: 0 8px;
+    border-top: 1.5px solid #232232;
+  }
+  .mobile-bottom-nav a {
+    color: #fff;
+    font-size: 1.45rem;
+    opacity: 0.8;
+    transition: color 0.18s, opacity 0.18s, transform 0.13s;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex: 1 1 0;
+    height: 100%;
+  }
+  .mobile-bottom-nav a:hover, .mobile-bottom-nav a:active {
+    color: #38a169;
+    opacity: 1;
+    transform: scale(1.13);
+  }
 }
-/* Remove old sidebar styles if present */
-.sidebar, .sidebar-nav, .sidebar-footer { display: none !important; }
+.mobile-bottom-nav {
+  display: none;
+}
 
 .logo-top-left {
   position: fixed;
@@ -1853,43 +1886,4 @@ body.light-theme .contact-btn-upgraded:hover {
 .logo-dot {
   color: #3498db;
   margin-left: 2px;
-}
-
-.mobile-bottom-navbar {
-  display: none;
-}
-@media (max-width: 700px) {
-  .mobile-bottom-navbar {
-    display: flex;
-    position: fixed;
-    left: 0;
-    bottom: 0;
-    width: 100vw;
-    height: 60px;
-    background: rgba(24, 26, 32, 0.98);
-    box-shadow: 0 -2px 16px 0 rgba(0,0,0,0.18);
-    z-index: 1200;
-    justify-content: space-around;
-    align-items: center;
-    padding: 0 8px;
-    border-top: 1.5px solid #232232;
-  }
-  .mobile-bottom-navbar a {
-    color: #fff;
-    font-size: 1.6rem;
-    opacity: 0.8;
-    transition: color 0.18s, opacity 0.18s;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    flex: 1 1 0;
-    height: 100%;
-  }
-  .mobile-bottom-navbar a:hover, .mobile-bottom-navbar a:focus {
-    color: #38a169;
-    opacity: 1;
-  }
-  .minimal-social-bar, .logo-top-left {
-    display: none !important;
-  }
 }
