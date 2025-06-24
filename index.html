@@ -12,21 +12,16 @@
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/devicons/devicon@v2.15.1/devicon.min.css">
 </head>
 <body>
-    <div class="sidebar">
-        <a href="#hero" class="logo">AY<span>.</span></a>
-        <nav class="sidebar-nav">
-            <a href="#about" title="About"><span>About</span><i class="fas fa-user"></i></a>
-            <a href="#skills" title="Skills"><span>Skills</span><i class="fas fa-cog"></i></a>
-            <a href="#projects" title="Projects"><span>Projects</span><i class="fas fa-briefcase"></i></a>
-            <a href="#experience" title="Experience"><span>Experience</span><i class="fas fa-graduation-cap"></i></a>
-            <a href="#contact" title="Contact"><span>Contact</span><i class="fas fa-envelope"></i></a>
-        </nav>
-        <div class="sidebar-footer">
-            <button id="theme-switcher"><i class="fas fa-sun"></i></button>
-            <a href="https://github.com/atharvbyadav" target="_blank"><i class="fab fa-github"></i></a>
-            <a href="https://www.linkedin.com/in/atharvbyadav" target="_blank"><i class="fab fa-linkedin"></i></a>
-        </div>
+    <!-- Logo in top left -->
+    <div class="logo-top-left">AY<span class="logo-dot">.</span></div>
+    <!-- Minimal vertical social links bar -->
+    <div class="minimal-social-bar">
+        <a href="https://github.com/atharvbyadav" target="_blank" title="GitHub"><i class="fab fa-github"></i></a>
+        <a href="https://www.linkedin.com/in/atharvbyadav" target="_blank" title="LinkedIn"><i class="fab fa-linkedin"></i></a>
+        <a href="mailto:uuwr5t1s@duck.com" title="Email"><i class="fas fa-envelope"></i></a>
+        <div class="social-bar-line"></div>
     </div>
+    <!-- End minimal social bar -->
 
     <main class="main-content">
         <section id="hero">
@@ -249,7 +244,7 @@
                             <a href="mailto:uuwr5t1s@duck.com" class="contact-detail-link"><i class="fas fa-envelope"></i> uuwr5t1s@duck.com</a>
                             <div class="privacy-pill">
                                 <i class="fas fa-user-secret"></i>
-                                Yep, that’s a real inbox — ducks take privacy seriously.
+                                Yep, that's a real inbox — ducks take privacy seriously.
                             </div>
                         </div>
                     </div>
@@ -281,56 +276,18 @@
         </footer>
     </main>
 
+    <!-- Mobile Bottom Navbar -->
+    <nav class="mobile-bottom-navbar">
+      <a href="#hero" title="Home"><i class="fas fa-home"></i></a>
+      <a href="#projects" title="Projects"><i class="fas fa-briefcase"></i></a>
+      <a href="https://github.com/atharvbyadav" target="_blank" title="GitHub"><i class="fab fa-github"></i></a>
+      <a href="https://www.linkedin.com/in/atharvbyadav" target="_blank" title="LinkedIn"><i class="fab fa-linkedin"></i></a>
+      <a href="mailto:uuwr5t1s@duck.com" title="Email"><i class="fas fa-envelope"></i></a>
+    </nav>
+
     <script>
         // Set current year
         document.getElementById('current-year').textContent = new Date().getFullYear();
-
-        // Active nav link highlighting on scroll
-        const sections = document.querySelectorAll('main section');
-        const navLinks = document.querySelectorAll('.sidebar-nav a');
-
-        const observer = new IntersectionObserver((entries) => {
-            entries.forEach(entry => {
-                if (entry.isIntersecting) {
-                    navLinks.forEach(link => {
-                        link.classList.remove('active');
-                        if (link.getAttribute('href').substring(1) === entry.target.id) {
-                            link.classList.add('active');
-                }
-            });
-                }
-            });
-        }, { rootMargin: '-50% 0px -50% 0px' });
-
-        sections.forEach(section => {
-            observer.observe(section);
-        });
-
-        // Theme switcher
-        const themeSwitcher = document.getElementById('theme-switcher');
-        const body = document.body;
-        const themeIcon = themeSwitcher.querySelector('i');
-
-        const applyTheme = (theme) => {
-            if (theme === 'light') {
-                body.classList.add('light-theme');
-                themeIcon.classList.replace('fa-moon', 'fa-sun');
-                localStorage.setItem('theme', 'light');
-            } else {
-                body.classList.remove('light-theme');
-                themeIcon.classList.replace('fa-sun', 'fa-moon');
-                localStorage.setItem('theme', 'dark');
-            }
-        };
-
-        themeSwitcher.addEventListener('click', () => {
-            const isLight = body.classList.contains('light-theme');
-            applyTheme(isLight ? 'dark' : 'light');
-        });
-
-        // Load saved theme or default to dark
-        const savedTheme = localStorage.getItem('theme');
-        applyTheme(savedTheme || 'dark');
 
         // Contact form AJAX submission
         const contactForm = document.getElementById('contact-form');
