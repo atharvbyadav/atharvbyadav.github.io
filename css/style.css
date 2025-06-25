@@ -1833,57 +1833,51 @@ body.light-theme .contact-btn-upgraded:hover {
   .minimal-social-bar {
     display: none;
   }
-  .mobile-bottom-nav {
-    display: flex;
-  }
 }
-.mobile-bottom-nav {
-  display: none;
+
+.logo-top-left-link {
+  display: block;
   position: fixed;
-  left: 0;
-  right: 0;
-  bottom: 0;
-  width: 100vw;
-  height: 60px;
-  background: rgba(24, 26, 32, 0.98);
-  box-shadow: 0 -2px 16px 0 rgba(0,0,0,0.18);
-  z-index: 1200;
-  justify-content: space-around;
-  align-items: center;
-  padding: 0 8px;
-  border-top: 1.5px solid #232232;
+  top: 18px;
+  left: 18px;
+  z-index: 1100;
+  text-decoration: none;
+  outline: none;
 }
-.mobile-bottom-nav a {
-  color: #fff;
-  font-size: 1.45rem;
-  opacity: 0.8;
-  transition: color 0.18s, opacity 0.18s, transform 0.13s;
+.logo-top-left-img {
+  width: 110px;
+  height: auto;
+  pointer-events: auto;
+  user-select: none;
+  display: block;
+}
+
+/* Remove old initials logo styles if not used elsewhere */
+.logo-top-left, .logo-dot { display: none !important; }
+
+.contact-social-row {
+  display: flex;
+  gap: 18px;
+  margin-bottom: 10px;
+  align-items: center;
+  justify-content: center;
+}
+.contact-social-row a {
   display: flex;
   align-items: center;
   justify-content: center;
-  flex: 1 1 0;
-  height: 100%;
+  width: 38px;
+  height: 38px;
+  border-radius: 50%;
+  background: #232232;
+  color: #bdbdbd;
+  font-size: 1.35rem;
+  transition: background 0.18s, color 0.18s, transform 0.13s, box-shadow 0.18s;
+  box-shadow: 0 1px 6px 0 rgba(0,0,0,0.10);
 }
-.mobile-bottom-nav a:hover, .mobile-bottom-nav a:active {
-  color: #38a169;
-  opacity: 1;
-  transform: scale(1.13);
-}
-
-.logo-top-left {
-  position: fixed;
-  top: 32px;
-  left: 32px;
-  font-family: 'Poppins', 'Fira Code', Arial, sans-serif;
-  font-weight: 700;
-  font-size: 2.2rem;
+.contact-social-row a:hover {
+  background: #3692CC;
   color: #fff;
-  letter-spacing: 1px;
-  z-index: 1100;
-  user-select: none;
-  text-decoration: none;
-}
-.logo-dot {
-  color: #3498db;
-  margin-left: 2px;
+  transform: scale(1.13);
+  box-shadow: 0 4px 18px 0 rgba(54,146,204,0.18);
 }
