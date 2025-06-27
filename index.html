@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Atharv Yadav | Portfolio</title>
-    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="css/styles.css">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&family=Fira+Code:wght@400;500&display=swap" rel="stylesheet">
@@ -13,13 +13,13 @@
 </head>
 <body>
     <!-- Logo in top left -->
-    <a href="#hero" class="logo-top-left-link"><img src="assets/mylogo.png" alt="AY Logo" class="logo-top-left-img"></a>
+    <a href="#" class="logo-top-left-link"><img src="assets/mylogo.png" alt="AY Logo" class="logo-top-left-img"></a>
     <!-- Minimal vertical social links bar -->
     <div class="minimal-social-bar">
         <a href="https://github.com/atharvbyadav" target="_blank" title="GitHub"><i class="fab fa-github"></i></a>
         <a href="https://www.linkedin.com/in/atharvbyadav" target="_blank" title="LinkedIn"><i class="fab fa-linkedin"></i></a>
         <a href="mailto:uuwr5t1s@duck.com" title="Email"><i class="fas fa-envelope"></i></a>
-        <div class="social-bar-line"></div>
+        <a href="#contact"><div class="social-bar-line"></div></a>
     </div>
     <!-- End minimal social bar -->
 
@@ -155,7 +155,7 @@
                     </div>
                 </div>
                 <div class="explore-more-projects-btn-wrap">
-                    <a href="projects.html" class="btn btn-explore-projects">Explore More Projects</a>
+                    <a href="projects.html" class="btn btn-explore-projects">Explore More Projects <span class="arrow">→</span></a>
                 </div>
             </div>
         </section>
@@ -265,7 +265,6 @@
                             <div class="form-group">
                                 <textarea id="message" name="message" rows="5" placeholder="Your Message..."></textarea>
                             </div>
-                            <!-- Honeypot field (hidden from users) -->
                             <div style="display:none;">
                                 <input type="text" name="_gotcha" tabindex="-1" autocomplete="off">
                             </div>
@@ -286,57 +285,113 @@
         // Set current year
         document.getElementById('current-year').textContent = new Date().getFullYear();
 
-        // Contact form AJAX submission
+        // --- Contact Form Anti-Spam & Validation ---
         const contactForm = document.getElementById('contact-form');
         const contactBtn = document.getElementById('contact-submit-btn');
         const contactBtnText = document.getElementById('contact-btn-text');
         const contactMsg = document.getElementById('contact-form-message');
+        let formReadyTime = Date.now() + 5000; // 5 seconds after page load
+
+        // Spam keywords (case-insensitive)
+        const spamWords = [
+            'viagra', 'casino', 'loan', 'bitcoin', 'buy followers', 'porn', 'sex', 'escort', 'cialis', 'crypto', 'forex', 'bet', 'gamble', 'win money', 'nude', 'xxx', 'pharmacy', 'drugs', 'hack', 'scam', 'cheap', 'replica', 'payday', 'credit card', 'investment', 'get rich', 'work from home', 'adult', 'dating', 'follower', 'followers', 'likes', 'telegram', 'whatsapp', 'tiktok', 'instagram', 'snapchat', 'onlyfans'
+        ];
+
+        function showMsg(msg, color) {
+            contactMsg.textContent = msg;
+            contactMsg.style.color = color;
+            contactMsg.style.fontWeight = '600';
+            contactMsg.style.marginTop = '1em';
+            contactMsg.style.textAlign = 'center';
+        }
+
+        function validateEmail(email) {
+            return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email);
+        }
 
         if (contactForm) {
             contactForm.addEventListener('submit', async function(e) {
                 e.preventDefault();
-                contactBtn.disabled = true;
-                contactBtnText.textContent = 'Sending...';
                 contactMsg.textContent = '';
                 contactMsg.style.color = '';
+
+                // Prevent submission in first 5 seconds
+                if (Date.now() < formReadyTime) {
+                    showMsg('Please wait a few seconds before submitting.', '#e53e3e');
+                    return;
+                }
 
                 // Honeypot check
                 const gotcha = contactForm.querySelector('input[name="_gotcha"]').value;
                 if (gotcha) {
-                    contactMsg.textContent = 'Spam detected.';
-                    contactMsg.style.color = '#e53e3e';
-                    contactBtn.disabled = false;
-                    contactBtnText.textContent = 'Send Message';
+                    showMsg('Spam detected.', '#e53e3e');
                     return;
                 }
 
+                // Get form values
+                const name = contactForm.name.value.trim();
+                const email = contactForm.email.value.trim();
+                const message = contactForm.message.value.trim();
+
+                // Validation
+                if (!name) {
+                    showMsg('Please enter your name.', '#e53e3e');
+                    return;
+                }
+                if (!email) {
+                    showMsg('Please enter your email.', '#e53e3e');
+                    return;
+                }
+                if (!validateEmail(email)) {
+                    showMsg('Please enter a valid email address.', '#e53e3e');
+                    return;
+                }
+                if (!message) {
+                    showMsg('Please enter your message.', '#e53e3e');
+                    return;
+                }
+                if (message.length < 20) {
+                    showMsg('Message must be at least 20 characters.', '#e53e3e');
+                    return;
+                }
+                // Spam keyword check
+                const lowerMsg = message.toLowerCase();
+                for (const word of spamWords) {
+                    if (lowerMsg.includes(word)) {
+                        showMsg('Message contains prohibited words.', '#e53e3e');
+                        return;
+                    }
+                }
+
+                // Disable button, show sending
+                contactBtn.disabled = true;
+                contactBtn.classList.add('disabled');
+                contactBtnText.textContent = 'Sending...';
+
+                // Prepare form data
                 const formData = new FormData(contactForm);
                 try {
                     const response = await fetch(contactForm.action, {
                         method: 'POST',
                         body: formData,
-                        headers: {
-                            'Accept': 'application/json'
-                        }
+                        headers: { 'Accept': 'application/json' }
                     });
                     if (response.ok) {
-                        contactMsg.textContent = 'Thank you! Your message has been sent.';
-                        contactMsg.style.color = '#38a169';
+                        showMsg('Thank you! Your message has been sent.', '#38a169');
                         contactForm.reset();
                     } else {
                         const data = await response.json();
                         if (data.errors && data.errors.length > 0) {
-                            contactMsg.textContent = data.errors.map(e => e.message).join(', ');
+                            showMsg(data.errors.map(e => e.message).join(', '), '#e53e3e');
                         } else {
-                            contactMsg.textContent = 'Oops! Something went wrong. Please try again.';
+                            showMsg('Oops! Something went wrong. Please try again.', '#e53e3e');
                         }
-                        contactMsg.style.color = '#e53e3e';
                     }
                 } catch (error) {
-                    contactMsg.textContent = 'Network error. Please try again.';
-                    contactMsg.style.color = '#e53e3e';
+                    showMsg('Network error. Please try again.', '#e53e3e');
                 }
                 contactBtn.disabled = false;
+                contactBtn.classList.remove('disabled');
                 contactBtnText.textContent = 'Send Message';
             });
         }
