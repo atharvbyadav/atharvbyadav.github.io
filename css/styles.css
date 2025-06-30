@@ -11,8 +11,8 @@
   --dark-text: #a1a1aa;
   --dark-heading: #fafafa;
   --dark-border: #27272a;
-  --dark-accent: #3692CC;
-  --dark-accent-hover: #52a9e3;
+  --dark-accent: #4338ca;
+  --dark-accent-hover: #3730a3;
   --font-primary: 'Poppins', sans-serif;
   --transition-fast: 0.2s ease-in-out;
 }
@@ -112,7 +112,7 @@ body.light-theme a:hover { color: var(--accent-color-hover); }
   font-weight: 700;
   letter-spacing: 1px;
   position: relative;
-  color: var(--dark-accent);
+  color: var(--accent-color);
   opacity: 0;
   animation: fadeInAboutTitle 1.2s ease 0.2s forwards;
 }
@@ -121,7 +121,7 @@ body.light-theme a:hover { color: var(--accent-color-hover); }
   display: block;
   width: 60px;
   height: 5px;
-  background: linear-gradient(90deg, var(--dark-accent), var(--dark-accent-hover));
+  background: linear-gradient(90deg, var(--accent-color), var(--accent-color-hover));
   border-radius: 3px;
   margin-top: 18px;
 }
@@ -512,6 +512,7 @@ body.light-theme .skills-minimal-grid .skill-minimal-card li:hover {
 }
 .btn-project i {
   font-size: 1.13em;
+  min-width: 1.13em;
   color: var(--accent-color, #6cf);
   margin-right: 0.1em;
   display: inline-block;
@@ -542,129 +543,190 @@ body.light-theme .btn-project:hover {
 
 /* Experience Timeline */
 .exp-timeline-grid {
-  display: flex;
-  flex-direction: column;
-  gap: 44px;
+  display: grid; /* Changed to grid for more flexible layout */
+  grid-template-columns: 1fr; /* Single column for default */
+  gap: 40px; /* Consistent gap between items */
   margin-top: 60px;
 }
+
 .exp-timeline-item {
   display: flex;
   align-items: flex-start;
-  gap: 32px;
-}
-.exp-timeline-left {
-  display: flex;
-  flex-direction: column;
-  align-items: flex-end;
-  min-width: 340px;
-  max-width: 420px;
-  flex: 1 1 340px;
+  gap: 25px; /* Reduced gap for a tighter look */
   position: relative;
+  padding-left: 60px; /* Space for the line and icon */
 }
+
+.exp-timeline-item::before {
+  content: '';
+  position: absolute;
+  left: 20px; /* Position of the vertical line */
+  top: 0px;
+  bottom: 0px;
+  width: 3px;
+  background: var(--dark-border); /* Subtle line color */
+  border-radius: 2px;
+}
+
+.exp-timeline-item:last-child::before {
+  height: calc(100% - 20px); /* Adjust line height for the last item */
+}
+
 .exp-timeline-icon {
-  width: 44px;
-  height: 44px;
-  background: #181a20;
+  position: absolute;
+  left: 0; /* Align icon with the line */
+  top: 0;
+  width: 45px;
+  height: 45px;
+  background: var(--dark-accent); /* Vibrant icon background */
   border-radius: 50%;
   display: flex;
   align-items: center;
   justify-content: center;
-  font-size: 1.45rem;
-  color: var(--accent-color);
-  border: 2px solid var(--accent-color);
-  margin-bottom: 10px;
-  box-shadow: 0 2px 12px 0 rgba(80,120,255,0.10);
+  font-size: 1.5rem;
+  color: #fff; /* White icon color */
+  border: 3px solid var(--dark-surface); /* Border matching card background */
+  z-index: 1; /* Ensures icon is above the line */
+  box-shadow: 0 4px 15px rgba(54, 146, 204, 0.3); /* Soft shadow */
+  transition: all 0.3s ease;
 }
-.exp-timeline-line {
-  width: 3px;
-  height: 60px;
-  background: var(--accent-color);
-  border-radius: 2px;
-  margin-bottom: 10px;
+
+.exp-timeline-item:hover .exp-timeline-icon {
+  transform: scale(1.1);
+  box-shadow: 0 6px 20px rgba(54, 146, 204, 0.5);
 }
-.exp-timeline-title {
-  font-size: 1.18rem;
-  font-weight: 800;
-  color: #fff;
-  text-align: right;
-  margin-bottom: 6px;
-  line-height: 1.15;
-}
-.exp-timeline-meta {
-  font-size: 0.97rem;
-  color: #bdbdbd;
-  text-align: right;
-  margin-bottom: 0;
-  font-weight: 400;
-}
-.exp-timeline-meta span {
-  color: var(--accent-color);
-  font-weight: 600;
-  margin-left: 8px;
-}
-.exp-timeline-card {
-  flex: 2 1 0;
-  background: #101117;
-  color: #fff;
-  border-radius: 14px;
-  border: 1.5px solid var(--accent-color);
-  padding: 22px 16px;
-  font-size: 0.99rem;
-  font-weight: 400;
-  box-shadow: 0 2px 18px 0 rgba(80,120,255,0.07);
+
+.exp-timeline-content {
+  flex-grow: 1; /* Content takes remaining space */
   display: flex;
-  align-items: center;
-  min-height: 60px;
-  transition: box-shadow 0.18s, border 0.18s;
+  flex-direction: column;
+  background: var(--dark-surface); /* Card background */
+  border-radius: 14px;
+  border: 1.5px solid var(--dark-border);
+  padding: 25px 20px; /* Generous padding */
+  box-shadow: 0 2px 15px rgba(0,0,0,0.07);
+  transition: all 0.3s ease;
 }
-.exp-timeline-card:hover {
-  box-shadow: 0 4px 32px 0 var(--accent-color);
-  border-color: var(--accent-color-hover);
+
+.exp-timeline-item:hover .exp-timeline-content {
+  border-color: var(--dark-accent);
+  box-shadow: 0 44px 25px rgba(54, 146, 204, 0.15);
+  transform: translateY(-2px);
+}
+
+.exp-timeline-title {
+  font-size: 1.35rem; /* Larger, bolder title */
+  font-weight: 700;
+  color: var(--dark-heading);
+  margin-bottom: 5px;
+  line-height: 1.2;
+}
+
+.exp-timeline-meta {
+  font-size: 0.95rem;
+  color: var(--dark-text);
+  margin-bottom: 15px;
+  font-weight: 400;
+}
+
+.exp-timeline-meta span {
+  font-weight: 600;
+  color: var(--dark-accent);
+}
+
+.exp-timeline-description {
+  font-size: 1.05rem;
+  color: var(--dark-text);
+  line-height: 1.6;
+}
+
+/* Light Theme Adjustments */
+body.light-theme .exp-timeline-item::before {
+  background: var(--border-color);
 }
 body.light-theme .exp-timeline-icon {
-  background: #fff;
-  color: var(--accent-color);
-  border-color: var(--accent-color);
-}
-body.light-theme .exp-timeline-line {
   background: var(--accent-color);
+  color: #fff;
+  border-color: var(--surface-color);
+  box-shadow: 0 4px 15px rgba(67, 56, 202, 0.3);
+}
+body.light-theme .exp-timeline-item:hover .exp-timeline-icon {
+  box-shadow: 0 6px 20px rgba(67, 56, 202, 0.5);
+}
+body.light-theme .exp-timeline-content {
+  background: var(--surface-color);
+  border-color: var(--border-color);
+  box-shadow: 0 2px 15px rgba(0,0,0,0.03);
+}
+body.light-theme .exp-timeline-item:hover .exp-timeline-content {
+  border-color: var(--accent-color);
+  box-shadow: 0 4px 25px rgba(67, 56, 202, 0.1);
 }
 body.light-theme .exp-timeline-title {
-  color: var(--accent-color);
+  color: var(--heading-color);
 }
 body.light-theme .exp-timeline-meta {
-  color: #444;
+  color: var(--text-color);
 }
-body.light-theme .exp-timeline-card {
-  background: #fff;
-  color: #222;
-  border-color: var(--accent-color);
+body.light-theme .exp-timeline-meta span {
+  color: var(--accent-color);
 }
+body.light-theme .exp-timeline-description {
+  color: var(--text-color);
+}
+
+
+/* Responsive Tweaks for Experience Section */
 @media (max-width: 900px) {
   .exp-timeline-item {
-    flex-direction: column;
-    gap: 18px;
+    padding-left: 50px; /* Adjust padding for smaller screens */
+    gap: 15px;
   }
-  .exp-timeline-left {
-    min-width: 0;
-    max-width: 100%;
-    align-items: flex-start;
-    text-align: left;
+  .exp-timeline-item::before {
+    left: 15px; /* Adjust line position */
   }
-  .exp-timeline-title, .exp-timeline-meta {
-    text-align: left;
-  }
-}
-@media (max-width: 600px) {
-  .exp-timeline-card {
-    padding: 12px 6px;
-    font-size: 0.93rem;
+  .exp-timeline-icon {
+    left: -5px; /* Adjust icon position */
+    width: 40px;
+    height: 40px;
+    font-size: 1.3rem;
   }
   .exp-timeline-title {
-    font-size: 1rem;
+    font-size: 1.2rem;
   }
   .exp-timeline-meta {
-    font-size: 0.89rem;
+    font-size: 0.9rem;
+  }
+  .exp-timeline-description {
+    font-size: 0.98rem;
+  }
+}
+
+@media (max-width: 600px) {
+  .exp-timeline-grid {
+    gap: 30px; /* Smaller gap for very small screens */
+  }
+  .exp-timeline-item {
+    padding-left: 40px;
+    gap: 10px;
+  }
+  .exp-timeline-item::before {
+    left: 10px;
+  }
+  .exp-timeline-icon {
+    left: -10px;
+    width: 35px;
+    height: 35px;
+    font-size: 1.1rem;
+  }
+  .exp-timeline-title {
+    font-size: 1.1rem;
+  }
+  .exp-timeline-meta {
+    font-size: 0.85rem;
+  }
+  .exp-timeline-description {
+    font-size: 0.9rem;
   }
 }
 
@@ -884,6 +946,9 @@ body.light-theme .exp-timeline-card {
   box-shadow: 0 4px 32px rgba(80,120,255,0.18);
   transform: translateY(-2px) scale(1.04);
 }
+.contact-btn-upgraded i {
+  color: #fff;
+}
 #contact-form-message {
   margin-top: 1em;
   font-size: 1.04em;
@@ -924,7 +989,7 @@ body.light-theme footer { background: var(--surface-color); }
     text-align: left;
   }
   #about .section-title {
-    text-align: center;
+    text-align: left;
   }
   .skills-minimal-grid {
     grid-template-columns: 1fr;
@@ -951,56 +1016,10 @@ body.light-theme footer { background: var(--surface-color); }
     flex-direction: column;
     min-height: auto;
   }
-  .hero-image {
-    width: 100%;
-    min-height: 220px;
-    height: 38vw;
-    max-height: 320px;
-    border-radius: 0 0 32px 32px;
-    position: relative;
-  }
-  .hero-image::before {
-    content: '';
-    position: absolute;
-    left: 0; right: 0; bottom: 0;
-    height: 60px;
-    background: linear-gradient(to bottom, rgba(0,0,0,0) 0%, rgba(9,9,11,0.7) 100%);
-    filter: blur(10px);
-    z-index: 2;
-    pointer-events: none;
-  }
-  .hero-image::after {
-    display: none;
-  }
   .hero-text-content {
-    padding: 28px 6vw 18px 6vw;
+    padding: 60px 8vw 40px 8vw;
     text-align: center;
     align-items: center;
-  }
-  .hero-text-content .hero-intro {
-    font-size: 0.98rem;
-    margin-bottom: 7px;
-  }
-  .hero-text-content h1 {
-    font-size: 2.1rem;
-    margin-bottom: 10px;
-  }
-  .hero-text-content .subtitle {
-    font-size: 1.01rem;
-    margin-bottom: 18px;
-  }
-  .hero-text-content .hero-actions {
-    margin-top: 22px;
-    flex-direction: column;
-    gap: 12px;
-    width: 100%;
-    align-items: center;
-  }
-  .hero-btn {
-    font-size: 0.98rem;
-    padding: 10px 18px;
-    width: 100%;
-    justify-content: center;
   }
 }
 @media (max-width: 700px) {
@@ -1010,22 +1029,271 @@ body.light-theme footer { background: var(--surface-color); }
   }
 }
 @media (max-width: 600px) {
-  .contact-title {
-    font-size: 1.3rem;
+  #hero {
+    flex-direction: column; /* Stacks image and text vertically */
+    min-height: 100vh; /* Ensures it takes full viewport height */
+    padding: 0; /* Remove padding for full width content */
   }
-  .contact-glass-card {
-    padding: 18px 2vw 12px 2vw;
-    border-radius: 18px;
+  .hero-image {
+    width: 100vw; /* Full width */
+    min-height: 220px; /* Minimum height for the image */
+    height: 38vw; /* Responsive height based on viewport width */
+    max-height: 320px; /* Maximum height for the image */
+    flex-basis: unset; /* Override flex-basis from desktop */
+    border-radius: 0 0 32px 32px; /* Rounded corners only at the bottom */
+    box-shadow: 0 8px 32px 0 rgba(0,0,0,0.18); /* Add shadow for depth */
+    position: relative;
+    background-size: cover;
+    background-position: center;
+    margin-bottom: 0; /* Remove margin-bottom if any */
   }
-  .exp-timeline-card {
-    padding: 12px 6px;
+  .hero-image::after {
+    display: none; /* Hides the mobile overlay as well */
+    }    
+  .hero-text-content {
+    flex-basis: unset; /* Override flex-basis from desktop */
+    padding: 28px 6vw 18px 6vw; /* Adjusted padding for mobile */
+    text-align: center; /* Center align text */
+    align-items: center; /* Center flex items horizontally */
+    z-index: 3; /* Ensure text content is above image overlay */
+  }
+  .hero-text-content .hero-intro {
+    font-size: 0.95rem; /* Smaller font size */
+    margin-bottom: 7px; /* Reduced margin */
+  }
+  .hero-text-content h1 {
+    font-size: 2.1rem; /* Smaller heading size */
+    margin-bottom: 10px; /* Reduced margin */
+  }
+  .hero-text-content .subtitle {
+    font-size: 1.01rem; /* Adjusted subtitle font size */
+    margin-bottom: 18px; /* Adjusted margin */
+  }
+  .hero-text-content .hero-actions {
+    margin-top: 22px; /* Adjusted margin */
+    flex-direction: column; /* Stack buttons vertically */
+    gap: 12px; /* Gap between stacked buttons */
+    width: 100%; /* Buttons take full width */
+  }
+  .hero-btn {
+    font-size: 1rem; /* Adjusted button font size */
+    padding: 12px 18px; /* Adjusted button padding */
+    width: 100%; /* Buttons take full width */
+    justify-content: center; /* Center button content */
+  }
+  .hero-btn i {
+    font-size: 1.1em; /* Adjusted icon size */
+  }
+  /* General mobile tweaks for other sections */
+  .section-title {
+    font-size: 1.5rem;
+    margin-bottom: 32px;
+  }
+  .section-container {
+    padding: 38px 4vw;
+  }
+  .about-content {
+    gap: 28px;
+  }
+  .about-image-container {
+    padding: 8px;
+    max-width: 220px;
+  }
+  .about-image-container img {
+    border-radius: 8px;
+  }
+  .about-details-grid {
+    grid-template-columns: 1fr;
+    gap: 10px;
+    font-size: 0.98rem;
+  }
+  .skills-minimal-grid {
+    gap: 18px;
+  }
+  .skill-minimal-card {
+    padding: 14px 8px 10px 8px;
+    min-height: 120px;
+  }
+  .skill-minimal-card h3 {
+    font-size: 1rem;
+  }
+  .skill-minimal-card li {
     font-size: 0.93rem;
+    padding: 4px 7px 4px 5px;
+  }
+  .projects-staggered-row {
+    flex-direction: column;
+    gap: 30px; /* Slightly increased gap for better separation on small screens */
+    margin: 40px 0 0 0; /* Adjusted top margin */
+  }
+  .project-staggered-card {
+    width: 90%; /* Use a percentage for more fluid sizing */
+    max-width: 320px; /* Slightly reduced max-width for very small screens */
+    margin: 0 auto;
+    top: 0 !important; /* Remove staggered offset on mobile for consistent layout */
+  }
+  .project-staggered-imgwrap {
+    height: 200px; /* Adjusted height for better visual balance */
+    border-radius: 12px; /* Slightly smaller border-radius */
+    box-shadow: 0 4px 20px rgba(0,0,0,0.15); /* Refined shadow */
+  }
+  /* Ensure hover effects are still visually pleasing, but acknowledge touch limitations */
+  .project-staggered-card:hover .project-staggered-imgwrap img {
+    transform: none; /* Disable scale/rotate on hover for mobile, or ensure it's subtle */
+  }
+  .project-staggered-card:hover .project-staggered-imgwrap {
+    box-shadow: 0 6px 25px rgba(0,0,0,0.25);
+  }
+
+  .project-staggered-overlay {
+    opacity: 1; /* Make overlay visible by default on mobile for direct interaction */
+    pointer-events: auto;
+    background: linear-gradient(0deg, rgba(0,0,0,0.88) 60%, rgba(0,0,0,0.3) 100%); /* Stronger overlay */
+  }
+  .project-staggered-card:hover .project-staggered-overlay {
+    opacity: 1; /* Keep fully visible on hover */
+  }
+
+  .project-staggered-info {
+    transform: translateY(0); /* Ensure info is always visible on mobile */
+    opacity: 1;
+    padding: 24px 15px 18px 15px; /* Adjust padding */
+  }
+  .project-staggered-info h3 {
+    font-size: 1.15rem; /* Slightly smaller font size */
+    margin-bottom: 5px;
+  }
+  .project-staggered-info p {
+    font-size: 0.95rem; /* Adjusted description font size */
+    margin-bottom: 15px;
+  }
+  .btn-project {
+    padding: 9px 24px 9px 18px; /* Adjusted padding for button */
+    font-size: 0.95rem; /* Slightly smaller button font */
+    border-radius: 1.8rem;
+  }
+
+  .project-staggered-title {
+    opacity: 0; /* Hide the title below the card on mobile, as overlay is always visible */
+    pointer-events: none;
+    transform: none;
+  }
+  .project-staggered-card:hover .project-staggered-title {
+    opacity: 0; /* Keep hidden on hover */
+  }
+
+  .explore-more-projects-btn-wrap {
+    margin: 60px 0 0 0; /* Adjusted margin for the "Explore More Projects" button */
+  }
+  .btn-explore-projects {
+    padding: 12px 30px 12px 24px;
+    font-size: 1rem;
+  }
+  .exp-timeline-grid {
+    gap: 22px;
+  }
+  .exp-timeline-item {
+    gap: 10px;
+  }
+  .exp-timeline-icon {
+    width: 32px;
+    height: 32px;
+    font-size: 1.1rem;
   }
   .exp-timeline-title {
-    font-size: 1rem;
+    font-size: 1.0rem; /* Adjusted title font size */
   }
   .exp-timeline-meta {
     font-size: 0.89rem;
+  }
+  .exp-timeline-card { /* This class is now used for the timeline content, not the item itself */
+    padding: 15px 15px; /* Adjusted padding for smaller screens */
+    font-size: 0.91rem;
+  }
+  .contact-glass-card {
+    flex-direction: column; /* Stack elements vertically */
+    gap: 20px; /* Reduced gap for mobile */
+    padding: 30px 20px; /* Adjusted padding for better fit */
+    border-radius: 12px; /* Slightly smaller border-radius */
+  }
+
+  .contact-info-upgraded {
+    text-align: center; /* Center align text on mobile */
+    align-items: center; /* Center items in flex container */
+  }
+
+  .contact-title {
+    font-size: 1.8rem; /* Slightly smaller title for mobile */
+    justify-content: center; /* Center the icon and text */
+    gap: 10px;
+    margin-bottom: 5px;
+  }
+
+  .contact-desc {
+    font-size: 1rem; /* Adjusted description font size */
+    margin-bottom: 15px;
+  }
+
+  .contact-details-upgraded {
+    gap: 10px;
+    margin-top: 10px;
+  }
+
+  .contact-social-row {
+    justify-content: center; /* Center social icons */
+    margin-bottom: 5px;
+  }
+
+  .contact-social-row a {
+    width: 38px; /* Maintain good tap target size */
+    height: 38px;
+    font-size: 1.3rem;
+  }
+
+  .contact-detail-link {
+    font-size: 0.95rem; /* Adjusted email link font size */
+    padding: 10px 15px;
+    justify-content: center; /* Center the email and icon */
+  }
+
+  .privacy-pill {
+    font-size: 0.8em; /* Smaller privacy pill text */
+    padding: 0.25em 0.8em;
+    margin-top: 0.5em;
+  }
+
+  .form-group {
+    margin-bottom: 15px; /* Reduced margin between form groups */
+  }
+
+  .form-group input,
+  .form-group textarea {
+    padding: 12px 15px; /* Smaller padding for inputs */
+    font-size: 0.95rem; /* Adjusted input font size */
+    border-radius: 8px; /* Slightly smaller border-radius for inputs */
+  }
+
+  .form-group textarea {
+    min-height: 100px; /* Reduced minimum height for textarea */
+  }
+
+  .contact-btn-upgraded {
+    padding: 12px 25px; /* Adjusted button padding */
+    font-size: 1.05rem; /* Adjusted button font size */
+    border-radius: 25px; /* Adjusted button border-radius */
+    gap: 10px;
+    width: 100%; /* Make button full width */
+    justify-content: center; /* Center button text and icon */
+    margin-top: 5px;
+  }
+
+  #contact-form-message {
+    font-size: 0.95em; /* Adjusted message font size */
+    margin-top: 0.8em;
+  }
+  footer {
+    padding: 18px 4vw;
+    font-size: 0.85rem;
   }
 }
 
@@ -1095,4 +1363,4 @@ body.light-theme footer { background: var(--surface-color); }
 }
 .project-staggered-card:hover .project-staggered-title {
   box-shadow: none;
-} 
+}
