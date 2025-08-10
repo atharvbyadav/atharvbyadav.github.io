@@ -274,7 +274,7 @@ body.light-theme #about .section-container, body.light-theme #projects .section-
 }
 .about-image-container {
   position: relative;
-  padding: 50px;
+  padding: 20px;
   order: 2;
 }
 .about-image-container::before {
@@ -282,8 +282,8 @@ body.light-theme #about .section-container, body.light-theme #projects .section-
   position: absolute;
   top: 0;
   left: 0;
-  width: 90%;
-  height: 90%;
+  width: 50%;
+  height: 50%;
   background-color: var(--dark-border);
   border-radius: 8px;
   z-index: -1;
