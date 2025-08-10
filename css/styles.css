@@ -297,7 +297,7 @@ body.light-theme .about-image-container::before {
   background-color: #e4e4e7;
 }
 .about-image-container img {
-  width: 100%;
+  width: 70%;
   border-radius: 8px;
   position: relative;
   filter: grayscale(100%) brightness(65%) contrast(90%);
